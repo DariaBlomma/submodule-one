@@ -4,14 +4,19 @@ on:
     branches:
       - master
 jobs:
-  build and cache:
+  build-and-cache:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v2
       - uses: actions/setup-node@v2
         with:
           node-version: '14'
-      
+      - name: Cache
+        id: submodule-one-build-cache
+        uses: actions/cache@v2
+        with:
+          path: ~/dist
+          key: ${{ runner.os }}-${{ hashFiles('**/dist') }}
       - name: Restore cache
         if: steps.submodule-one-build-cache.outputs.cache-hit == 'true'
         run: echo 'has cache'
