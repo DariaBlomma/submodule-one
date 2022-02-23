@@ -20,4 +20,7 @@ jobs:
         with:
           path: ./dist/
           key: ${{ runner.os }}-${{ hashFiles('**/dist') }}
+      - name: Restore cache
+        if: steps.submodule-one-build-cache.outputs.cache-hit == 'true'
+        run: echo 'has cache'
     
